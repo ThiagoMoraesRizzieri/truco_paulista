@@ -60,9 +60,9 @@ simulacoes = st.sidebar.slider("Número de Simulações", 1000, 50000, 10000)
 st.header("1. Defina o Vira")
 col_v1, col_v2 = st.columns(2)
 with col_v1:
-    v_val = st.selectbox("Valor do Vira", valores_opcoes, index=8) 
+    v_val = st.selectbox("Valor do Vira", ordem_base, index=8) 
 with col_v2:
-    v_naipe = st.selectbox("Naipe do Vira", naipes_opcoes, index=2) 
+    v_naipe = st.selectbox("Naipe do Vira", naipes, index=2) 
 
 vira = (v_val, v_naipe)
 
@@ -75,18 +75,18 @@ col_c1, col_c2, col_c3 = st.columns(3)
 
 with col_c1:
     st.markdown("**Carta 1**")
-    v1 = st.selectbox("Valor", valores_opcoes, index=9, key="v1")
-    n1 = st.selectbox("Naipe", naipes_opcoes, index=3, key="n1")
+    v1 = st.selectbox("Valor", ordem_base, index=9, key="v1")
+    n1 = st.selectbox("Naipe", naipes, index=3, key="n1")
 
 with col_c2:
     st.markdown("**Carta 2**")
-    v2 = st.selectbox("Valor", valores_opcoes, index=9, key="v2")
-    n2 = st.selectbox("Naipe", naipes_opcoes, index=2, key="n2")
+    v2 = st.selectbox("Valor", ordem_base, index=9, key="v2")
+    n2 = st.selectbox("Naipe", naipes, index=2, key="n2")
 
 with col_c3:
     st.markdown("**Carta 3**")
-    v3 = st.selectbox("Valor", valores_opcoes, index=9, key="v3")
-    n3 = st.selectbox("Naipe", naipes_opcoes, index=0, key="n3")
+    v3 = st.selectbox("Valor", ordem_base, index=9, key="v3")
+    n3 = st.selectbox("Naipe", naipes, index=0, key="n3")
 
 minha_mao = [(v1, n1), (v2, n2), (v3, n3)]
 
@@ -112,4 +112,5 @@ if st.button("Calcular Chance de Vitória"):
         else:
     
             st.warning("⚖️ Jogo parelho. Cuidado no blefe.")
+
 
