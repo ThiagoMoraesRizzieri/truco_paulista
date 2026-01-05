@@ -56,39 +56,60 @@ st.markdown("Baseado em Simulações de **Monte Carlo**")
 st.sidebar.header("Configurações")
 simulacoes = st.sidebar.slider("Número de Simulações", 1000, 50000, 10000)
 
-# Inputs do Usuário
-col1, col2 = st.columns(2)
+# --- SEÇÃO 1: A VIRA ---
+st.header("1. Defina o Vira")
+col_v1, col_v2 = st.columns(2)
+with col_v1:
+    v_val = st.selectbox("Valor do Vira", valores_opcoes, index=8) 
+with col_v2:
+    v_naipe = st.selectbox("Naipe do Vira", naipes_opcoes, index=2) 
 
-with col1:
-    st.subheader("O Vira")
-    v_val = st.selectbox("Valor do Vira", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], index=8)
-    v_naipe = st.selectbox("Naipe do Vira", ['ouro', 'espadilha', 'copas', 'zap'], index=2)
-    vira = (v_val, v_naipe)
+vira = (v_val, v_naipe)
 
-with col2:
-    st.subheader("Sua Mão")
-    m1 = st.multiselect("Carta 1", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], max_selections=1, default='3')
-    n1 = st.selectbox("Naipe 1", ['ouro', 'espadilha', 'copas', 'zap'], index=3)
-    
-    m2 = st.multiselect("Carta 1", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], max_selections=1, default='3')
-    n1 = st.selectbox("Naipe 1", ['ouro', 'espadilha', 'copas', 'zap'], index=3)
+# --- ESPAÇAMENTO ---
+st.markdown("---")
 
-    m3 = st.multiselect("Carta 1", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], max_selections=1, default='3')
-    n3 = st.selectbox("Naipe 1", ['ouro', 'espadilha', 'copas', 'zap'], index=3)
-    # (Para simplificar o exemplo, vamos fixar as outras 2 ou repetir o seletor)
-    # Em um app real, você faria 3 seletores completos
-    mao = [(m1[0], n1), (m2[0], n2), (m3[0], n3)]
+# --- SEÇÃO 2: MINHA MÃO ---
+st.header("2. Sua Mão")
+col_c1, col_c2, col_c3 = st.columns(3)
+
+with col_c1:
+    st.markdown("**Carta 1**")
+    v1 = st.selectbox("Valor", valores_opcoes, index=9, key="v1")
+    n1 = st.selectbox("Naipe", naipes_opcoes, index=3, key="n1")
+
+with col_c2:
+    st.markdown("**Carta 2**")
+    v2 = st.selectbox("Valor", valores_opcoes, index=9, key="v2")
+    n2 = st.selectbox("Naipe", naipes_opcoes, index=2, key="n2")
+
+with col_c3:
+    st.markdown("**Carta 3**")
+    v3 = st.selectbox("Valor", valores_opcoes, index=9, key="v3")
+    n3 = st.selectbox("Naipe", naipes_opcoes, index=0, key="n3")
+
+minha_mao = [(v1, n1), (v2, n2), (v3, n3)]
 
 if st.button("Calcular Chance de Vitória"):
-    with st.spinner('Rodando simulações...'):
-        prob = calcular_probabilidade_truco(mao, vira, simulacoes)
-        
-    st.metric("Probabilidade", f"{prob*100:.2f}%")
-    
-    if prob > 0.7:
-        st.success("🔥 TRUCA, MARRECO!")
-    elif prob < 0.4:
-        st.error("🤫 Vai de mansinho ou corre...")
+    # Validações antes de rodar a função
+    if len(set(minha_mao)) < 3:
+        st.error("Erro: Você selecionou cartas repetidas na mão.")
+    elif vira in minha_mao:
+        st.error("Erro: O vira não pode estar na sua mão.")
     else:
+        # Aqui você chama sua função 'calcular_probabilidade_truco'
+        # prob = calcular_probabilidade_truco(minha_mao, vira)
+        st.success("Cálculo realizado!")
+        with st.spinner('Rodando simulações...'):
+            prob = calcular_probabilidade_truco(mao, vira, simulacoes)
+            
+        st.metric("Probabilidade", f"{prob*100:.2f}%")
+        
+        if prob > 0.7:
+            st.success("🔥 TRUCA, MARRECO!")
+        elif prob < 0.4:
+            st.error("🤫 Vai de mansinho ou corre...")
+        else:
+    
+            st.warning("⚖️ Jogo parelho. Cuidado no blefe.")
 
-        st.warning("⚖️ Jogo parelho. Cuidado no blefe.")
