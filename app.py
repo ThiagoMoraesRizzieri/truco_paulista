@@ -1,9 +1,11 @@
 import streamlit as st
 import random
 
+ordem_base = ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3']
+naipes = ['ouro', 'espadilha', 'copas', 'zap']
+
 def calcular_probabilidade_truco(minha_mao_original, vira, n_simulacoes=10000):
-    ordem_base = ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3']
-    naipes = ['ouro', 'espadilha', 'copas', 'zap']
+
     
     idx_vira = ordem_base.index(vira[0])
     manilha_valor = ordem_base[(idx_vira + 1) % 10]
@@ -101,7 +103,7 @@ if st.button("Calcular Chance de Vitória"):
         # prob = calcular_probabilidade_truco(minha_mao, vira)
         st.success("Cálculo realizado!")
         with st.spinner('Rodando simulações...'):
-            prob = calcular_probabilidade_truco(mao, vira, simulacoes)
+            prob = calcular_probabilidade_truco(minha_mao, vira, simulacoes)
             
         st.metric("Probabilidade", f"{prob*100:.2f}%")
         
