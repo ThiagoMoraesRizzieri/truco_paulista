@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 
-# --- O SEU CÓDIGO ORIGINAL (Apenas a função) ---
 def calcular_probabilidade_truco(minha_mao_original, vira, n_simulacoes=10000):
     ordem_base = ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3']
     naipes = ['ouro', 'espadilha', 'copas', 'zap']
@@ -71,9 +70,14 @@ with col2:
     m1 = st.multiselect("Carta 1", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], max_selections=1, default='3')
     n1 = st.selectbox("Naipe 1", ['ouro', 'espadilha', 'copas', 'zap'], index=3)
     
+    m2 = st.multiselect("Carta 1", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], max_selections=1, default='3')
+    n1 = st.selectbox("Naipe 1", ['ouro', 'espadilha', 'copas', 'zap'], index=3)
+
+    m3 = st.multiselect("Carta 1", ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'], max_selections=1, default='3')
+    n3 = st.selectbox("Naipe 1", ['ouro', 'espadilha', 'copas', 'zap'], index=3)
     # (Para simplificar o exemplo, vamos fixar as outras 2 ou repetir o seletor)
     # Em um app real, você faria 3 seletores completos
-    mao = [(m1[0], n1), ('3', 'copas'), ('3', 'ouro')]
+    mao = [(m1[0], n1), (m2[0], n2), (m3[0], n3)]
 
 if st.button("Calcular Chance de Vitória"):
     with st.spinner('Rodando simulações...'):
@@ -86,4 +90,5 @@ if st.button("Calcular Chance de Vitória"):
     elif prob < 0.4:
         st.error("🤫 Vai de mansinho ou corre...")
     else:
+
         st.warning("⚖️ Jogo parelho. Cuidado no blefe.")
