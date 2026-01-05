@@ -13,7 +13,7 @@ def calcular_probabilidade_truco(minha_mao_original, vira, n_simulacoes=10000):
     def get_peso(carta):
         valor, naipe = carta
         if valor == manilha_valor:
-            return 11 + naipes.index(naipe)
+            return 10 + naipes.index(naipe)
         return ordem_base.index(valor) + 1
 
     baralho_completo = [(v, n) for v in ordem_base for n in naipes]
@@ -105,7 +105,8 @@ if st.button("Calcular Chance de Vitória"):
         with st.spinner('Rodando simulações...'):
             prob = calcular_probabilidade_truco(minha_mao, vira, simulacoes)
             
-        st.metric("Probabilidade", f"{prob*100:.2f}%")
+        st.metric("Probabilidade de ganhar
+        ", f"{prob*100:.2f}%")
         
         if prob > 0.7:
             st.success("🔥 TRUCA, MARRECO!")
